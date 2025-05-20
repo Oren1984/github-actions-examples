@@ -1,0 +1,35 @@
+name: Run Scripts Workflow
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  list_files_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run list-files.sh script
+        run: |
+          chmod +x list-files.sh
+          ./list-files.sh
+
+  run_scripts_job:
+    runs-on: ubuntu-latest
+    needs: list_files_job
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run run-scripts.sh script
+        run: |
+          chmod +x run-scripts.sh
+          ./run-scripts.sh
+
+      - name: Run palindrome.py script
+        run: |
+          python3 palindrome.py
+
