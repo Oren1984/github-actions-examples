@@ -1,0 +1,23 @@
+name: Run Scripts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Make shell scripts executable
+        run: chmod +x list-files.sh run-scripts.sh
+
+      - name: Run list-files.sh
+        run: ./list-files.sh
+
+      - name: Run palindrome.py
+        run: python3 palindrome.py
